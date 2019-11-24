@@ -1,0 +1,24 @@
+{
+  "name": "app-chat",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cassandra-driver": "^4.3.1",
+    "concurrently": "^5.0.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "http": "0.0.0",
+    "nodemon": "^1.19.4",
+    "socket.io": "^2.3.0"
+  }
+}

@@ -1,0 +1,23 @@
+.header {
+    min-height: 40px;
+    display: flex;
+    .search{
+        line-height: 40px;
+    }
+    .app {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .btn-avatar {
+        background: none;
+        border: none;
+        line-height: 40px;
+        color: white;
+        font-weight: bold;
+    }
+}
+
+.header-wrap {
+    background-color: black;
+    padding:5px 0;
+}
