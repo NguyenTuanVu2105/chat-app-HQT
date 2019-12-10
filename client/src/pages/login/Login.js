@@ -2,20 +2,26 @@ import React, {useContext, useState} from 'react'
 import './Login.scss'
 import { Form, Icon, Input, Alert, Button, Checkbox } from 'antd';
 import axios from 'axios';
-import AppContext from '../../Appcontext'
+import AppContext from '../../context/Appcontext'
 import { withRouter } from 'react-router-dom'
+import {host} from '../../helper/common'
+import {setUserCookies, getUser, checkAuth} from '../../helper/auth'
 
 const LoginWrap = (props) => {
     const context = useContext(AppContext)
-    if (context.user.username) {
+    if (checkAuth()) {
         props.history.push('/')
     }
     const [message, setMessage] = useState('')
-    const submitLogin = (value) => {
+    const submitLogin = async (value) => {
+        setUserCookies(value.token)
+        const user = await getUser()
         context.setUser({
-            username: value.username,
-            fullname: value.fullname,
-            avatar: value.avatar 
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            address: user.address,
+            avatar: user.avatar 
         })
         props.history.push('/')
     }
@@ -23,8 +29,9 @@ const LoginWrap = (props) => {
         e.preventDefault();
         props.form.validateFields((err, values) => {
           if (!err) {
-            axios.post('http://localhost:5000/api/login', values)
+            axios.post(`${host}/api/login`, values)
             .then(res => {
+                console.log(res.data)
                 if (res.data.success) {
                     submitLogin(res.data)
                 } else {
@@ -40,12 +47,12 @@ const LoginWrap = (props) => {
             <Form onSubmit={handleSubmit} className="login-form">
             {message && <Alert style={{marginBottom: '20px'}} message={message} type="error"/>}
                 <Form.Item>
-                {getFieldDecorator('username', {
-                    rules: [{ required: true, message: 'Please input your username!' }],
+                {getFieldDecorator('email', {
+                    rules: [{ required: true, message: 'Please input your email!' }],
                 })(
                     <Input
                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="Username"
+                    placeholder="Email"
                     />,
                 )}
                 </Form.Item>

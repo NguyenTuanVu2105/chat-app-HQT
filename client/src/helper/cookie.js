@@ -13,9 +13,3 @@ export function setCookie(name, value, options) {
 export function removeCookie(name) {
     return cookies.remove(name)
 }
-
-export const COOKIE_KEY = {
-    FULLNAME: 'FULLNAME',
-    AVATAR: 'AVATAR',
-    USERNAME: 'USERNAME'
-}

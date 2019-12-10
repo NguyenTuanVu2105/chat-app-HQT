@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {Button, Icon} from 'antd'
+import Appcontext from '../../../../../context/Appcontext'
 
 const Description = (props) => {
+    const context = useContext(Appcontext)
+    const myUser = context.user
+    const {rooms} = context
+    let room = rooms.find(room => JSON.stringify(room.id) === JSON.stringify(props.room))
     return (
         <div className="description-box">
         <div className="description">
@@ -10,9 +15,11 @@ const Description = (props) => {
                 Mô tả
                 <Icon type="edit" className="button-edit"/>
             </div>
-            <pre className="description-content">Đây là group dùng để test</pre>
+        <pre className="description-content">
+            {room ? room.description:'' }
+            </pre>
         </div>
-        <div className="note">
+        {/* <div className="note">
             <div className="description-header">
                 Ghi chú
                 <Icon type="edit" className="button-edit"/>
@@ -28,7 +35,7 @@ const Description = (props) => {
                 <Button type="primary" style={{width: "100%"}}>Thêm công việc</Button>
 
             </div>
-        </div>
+        </div> */}
     </div>
     )
 }

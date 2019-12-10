@@ -1,3 +1,4 @@
 module.exports = {
-    host: "http://localhost:5000"
+    host: "http://192.168.43.219:5000"
 }
+

@@ -1,0 +1,20 @@
+.contact-modal {
+    .ant-modal-content{
+        background: #f9f9f9;
+    }
+    .modal-input {  
+        .modal-label {
+            margin-bottom: 10px;
+            display: block;
+        }
+    }
+    .contact-box {
+        background: white;
+        margin-top: 10px;
+        height: 250px;
+        overflow: auto;
+        .contact-row {
+            padding: 10px;
+        }
+    }
+}

@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react'
 import './Register.scss'
 import { Form, Icon, Input, Button, Checkbox, Alert, notification} from 'antd';
 import axios from 'axios'
-import AppContext from '../../Appcontext'
+import AppContext from '../../context/Appcontext'
 import { withRouter } from 'react-router-dom'
-
+import {host} from '../../helper/common'
 
 const RegisterWrap = (props) => {
   const context = useContext(AppContext)
-  if (context.user.username) {
+  if (context.user.id) {
       props.history.push('/')
   }
     const [confirmDirty, setConfirmDirty] = useState(false)
@@ -17,7 +17,7 @@ const RegisterWrap = (props) => {
         e.preventDefault();
         props.form.validateFields((err, values) => {
           if (!err) {
-            axios.post(`http://localhost:5000/api/register`, values)
+            axios.post(`${host}/api/register`, values)
             .then(res => {
               if (res.data.success) {
                     notification['success']({
@@ -58,8 +58,8 @@ const RegisterWrap = (props) => {
             <Form onSubmit={handleSubmit} className="login-form">
             {message && <Alert style={{marginBottom: '20px'}} message={message} type="error"/>}
                 <Form.Item>
-                    {getFieldDecorator('fullname', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
+                    {getFieldDecorator('name', {
+                        rules: [{ required: true, message: 'Please input your name!' }],
                     })(
                         <Input
                         prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -68,12 +68,12 @@ const RegisterWrap = (props) => {
                     )}
                 </Form.Item>
                 <Form.Item>
-                {getFieldDecorator('username', {
-                    rules: [{ required: true, message: 'Please input your username!' }],
+                {getFieldDecorator('address', {
+                    rules: [{ required: true, message: 'Please input your address!' }],
                 })(
                     <Input
-                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="Username"
+                    prefix={<Icon type="environment" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="Address"
                     />,
                 )}
                 </Form.Item>
@@ -88,7 +88,7 @@ const RegisterWrap = (props) => {
                 })(
                     <Input
                     prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="email"
+                    placeholder="Email"
                     />,
                 )}
                 </Form.Item>

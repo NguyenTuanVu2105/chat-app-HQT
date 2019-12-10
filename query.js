@@ -1,6 +1,26 @@
+var moment = require('moment')
+
 module.exports = {
-    checkUser: username => `select * from user where username = '${username}'`,
-    addUser: (uName, fName, pwd, ava) => `insert into user(username, fullname, password, avatar) values ('${uName}', '${fName}', '${pwd}', '${ava}')`,
-    checkEmail: email => `select * from user where email = '${email}'`,
-    searchUser: query => `select * from user where fullname like '%${query}%';`
-}
+    addUser: (email, name, address, password, avatar) => `insert into user(id, email, name, address, password, avatar) values (${Date.now()},'${email}', '${name}', '${address}', '${password}','${avatar}')`,
+    checkUser: email => `select * from user where email = '${email}'`,
+    getProfile: userid => `select id, name, email, address, avatar from user where id = ${userid}`,
+    getAllUser: () => `select id, address, avatar, email, name from user`,
+    searchUser: query => `select id, name, email, address, avatar from user where name like '%${query}%'`,
+    getRoomsByUser: (userid) => `select rooms from user where id=${userid}`,
+    getRoomsByID: (roomids) => `select * from room where id in (${roomids.join(',')})`,
+    getIncomingRequest: (receiver) => `select * from request where receiver_id=${receiver} and accepted = false ALLOW FILTERING`,
+    getAcceptRequest: (receiver) => `select * from request where sender_id=${receiver} and accepted = false ALLOW FILTERING`,
+    getUsers: (users) => `select id, name, email, address, avatar from user where id in (${users.join(',')})`,
+    addRoom: (id, name, avatar, members, description, is_privated) => `insert into room(id, name, avatar, members, description, is_private, update_at) values (${id}, '${name}', '${avatar}', {${members.join(',')}}, '${description}', ${is_privated}, '${moment().format()}')`,
+    addRoomToUser: (room, users) => `update user set rooms = rooms + {${room}} where id in (${users.join(',')})`,
+    addRequest: (sender, receiver, accepted) => `insert into request(sender_id, receiver_id, accepted) values (${sender}, ${receiver}, ${accepted})`,
+    checkRequest: (sender, receiver) => `select * from request where sender_id=${sender} and receiver_id=${receiver}`,
+    acceptRequest: (sender, receiver) => `update request set accepted = true where sender_id=${sender} and receiver_id=${receiver}`,
+    delineRequest: (sender, receiver) => `delete from request where sender_id = ${sender} and receiver_id = ${receiver}`,
+    addContact: (contactId, userId) => `update user set contacts = contacts + {${contactId}} where id=${userId}`,
+    getContact: (userid) => `select contacts from user where id=${userid}`,
+    addMessage: (roomid, id, authorid, content) => `insert into message(room_id, message_id, author_id, content, update_at) values  (${roomid}, ${id}, ${authorid}, '${content}', '${moment().format()}')`,
+    getMessage: (roomid) => `select * from message where room_id = ${roomid}`,
+    updateRoom: (roomid) => `update room set update_at = '${moment().format()}', members_read = {} where id = ${roomid}`,
+    readMessage: (roomid, member) => `update room set members_read = members_read + {${member}} where id = ${roomid}`,
+}   

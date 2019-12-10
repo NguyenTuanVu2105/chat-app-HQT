@@ -1,0 +1,37 @@
+.user-search-body {
+    width: 100%;
+    height: 500px;
+    margin-top: 50px;
+    border: 1px solid #e6e6e6;
+    margin-top: 10px;
+    display: flex;
+    .chat-box-contact {
+        border: 1px solid #e6e6e6;
+        margin: 10px;
+        cursor: pointer;
+        p {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    }
+    .chat-box-cell:hover {
+        background: #00ffdc40;
+    }
+    .user-box-list {
+        width: 50%;
+        border: 1px solid #e6e6e6;
+        overflow: auto;
+    }
+    .user-search-detail {
+        width: 50%;
+    }
+}
+
+.imcoming-request {
+    .ant-badge-count {
+        right: -10px !important;
+    }
+}
+

@@ -1,16 +1,17 @@
-import React, {useContext} from 'react' 
+import React, {useContext, useEffect, useState} from 'react' 
 import './Homepage.scss'
 import Header from './components/Header'
 import Content from './components/Content'
-import AppContext from '../../Appcontext'
 import {withRouter} from 'react-router-dom'
+import {checkAuth} from '../../helper/auth'
+import Appcontext from '../../context/Appcontext'
 
 const Homepage = (props) => {
-    const context = useContext(AppContext)
-    if (!context.user.username) {
-        console.log(context.user.username)
+    
+    if (!checkAuth()) {
         props.history.push("/login")
     }
+
     return (
         <div className="homepage">
             <Header></Header>

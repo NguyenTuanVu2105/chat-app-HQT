@@ -1,14 +1,15 @@
 import React, {useContext} from 'react' 
 import "./Header.scss"
-import { Input,  Menu, Dropdown, Button, Icon, Avatar} from 'antd';
+import { Input,  Menu, Dropdown, Button, Icon, Avatar, Badge} from 'antd';
 import {logout} from '../../../helper/auth'
-import AppContext from '../../../Appcontext'
+import AppContext from '../../../context/Appcontext'
+
 const { Search } = Input;
 
 const Header = (props) => {
     const context = useContext(AppContext)
     const user = context.user
-
+    const {requests ,setRequests, contactVisible, setContactVisible} = context
     const menu = (
         <Menu>
           {/* <Menu.Item key="1">
@@ -40,14 +41,22 @@ const Header = (props) => {
                 <Search
                     placeholder="Nhập tìm kiếm của bạn"
                     onSearch={value => console.log(value)}
-                    style={{ width: "50%" }}
+                    style={{ width: "70%" }}
                 />
             </div>
             <div className="col-4 app">
+                <div className="tool">
+                  <Badge count={requests.length} offset={[-10,10]}>
+                    <Button className="btn-header" onClick={() => setContactVisible(true)} size="large"><Icon type="user-add" /></Button>
+                  </Badge>
+                  <Badge count={0} offset={[-10,10]}>
+                    <Button className="btn-header" size="large"><Icon type="bell" theme="filled" /></Button>
+                  </Badge>   
+                </div>
                 <Dropdown overlay={menu}>
                 <Button className="btn-avatar">
                     <Avatar src={user.avatar}></Avatar>
-                    &nbsp; &nbsp; {user.fullname}
+                    &nbsp; &nbsp; {user.name}
                     <Icon type="down" />
                 </Button>
                 </Dropdown>
