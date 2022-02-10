@@ -16,7 +16,7 @@
     "font-awesome": "^4.7.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-cookie": "^4.0.1",
